@@ -15,7 +15,7 @@ permissions: write-all
 
 jobs:
   terraform:
-    uses: jtcressy-home/actions-workflows/terraform.yml@main
+    uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
       tailscale: false
     secrets: inherit
