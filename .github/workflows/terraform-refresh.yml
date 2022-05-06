@@ -11,15 +11,15 @@ jobs:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
       tailscale: false
-      action: apply -refresh-only
+      action: plan -refresh-only
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit
   terraform-has-changes:
     runs-on: ubuntu-latest
+    if: needs.terraform.outputs.plan-has-changes
     steps:
     - name: Create/Update Issue
       id: create-issue
-      if: needs.terraform.outputs.plan-has-changes
       uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
