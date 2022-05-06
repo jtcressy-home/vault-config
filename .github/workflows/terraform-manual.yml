@@ -1,0 +1,24 @@
+name: Terraform Manual
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform Action to Run'
+        required: true
+        type: string
+      debug:
+        type: boolean
+        default: false
+        description: 'Enable extra debug jobs'
+        required: false
+
+permissions: write-all
+
+jobs:
+  terraform:
+    uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
+    with:
+      tailscale: false
+      action: ${{ github.event.inputs.action }}
+      debug: ${{ github.event.inputs.debug }}
+    secrets: inherit

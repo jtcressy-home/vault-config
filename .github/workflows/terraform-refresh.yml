@@ -1,0 +1,16 @@
+name: Terraform Auto-Refresh
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "* 6,18 * * *"
+
+permissions: write-all
+
+jobs:
+  terraform:
+    uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
+    with:
+      tailscale: false
+      action: apply -refresh-only
+      debug: ${{ github.event.inputs.debug || false }}
+    secrets: inherit
