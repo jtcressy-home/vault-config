@@ -14,3 +14,16 @@ jobs:
       action: apply -refresh-only
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit
+  terraform-has-changes:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create/Update Issue
+      id: create-issue
+      if: needs.terraform.outputs.plan-has-changes
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PLAN_OUTPUT: ${{ needs.terraform.outputs.plan-output }}
+      with:
+        filename: .github/config-drift-issue.md
+        update_existing: true
