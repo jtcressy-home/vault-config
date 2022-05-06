@@ -12,9 +12,9 @@ terraform {
       source  = "hashicorp/google"
       version = "~>4.20"
     }
-    vault = {
-      source = "hashicorp/vault"
-      version = "3.5.0"
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "3.14.0"
     }
   }
   required_version = ">=1.0"
