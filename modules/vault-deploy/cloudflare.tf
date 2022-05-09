@@ -1,10 +1,10 @@
 resource "cloudflare_record" "jtcressy-net" {
-  zone_id = data.cloudflare_zones.jtcressy-net.id
-  name    = "vault"
-  type    = "CNAME"
-  value   = google_cloud_run_service.vault.status.0.url
-  proxied = true
-  ttl     = 1
+  zone_id = data.cloudflare_zone.jtcressy-net.id
+  name    = google_cloud_run_domain_mapping.vault.status.0.resource_records.0.name
+  type    = google_cloud_run_domain_mapping.vault.status.0.resource_records.0.type
+  value   = google_cloud_run_domain_mapping.vault.status.0.resource_records.0.rrdata
+  proxied = false
+  ttl     = 60
 }
 
 resource "tls_private_key" "vault-cforigin-tls" {
