@@ -7,26 +7,53 @@ on:
 permissions: write-all
 
 jobs:
-  terraform:
+  terraform-layer-deploy:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
+      path: /layers/deploy
       tailscale: false
       action: plan -refresh-only
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit
-  terraform-has-changes:
+  terraform-layer-config:
+    uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
+    with:
+      path: /layers/config
+      tailscale: false
+      action: plan -refresh-only
+      debug: ${{ github.event.inputs.debug || false }}
+    secrets: inherit
+  terraform-layer-deploy-has-changes:
     runs-on: ubuntu-latest
     needs:
-    - terraform
+    - terraform-layer-deploy
     steps:
     - uses: actions/checkout@v2
     - name: Create/Update Issue
       id: create-issue
-      if: needs.terraform.outputs.plan-has-changes
+      if: needs.terraform-layer-deploy.outputs.plan-has-changes == 'true'
       uses: JasonEtco/create-an-issue@v2
       env:
+        TF_LAYER: deploy
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PLAN_OUTPUT: ${{ needs.terraform.outputs.plan-output }}
+        PLAN_OUTPUT: ${{ needs.terraform-layer-deploy.outputs.plan-output }}
+      with:
+        filename: .github/config-drift-issue.md
+        update_existing: true
+  terraform-layer-config-has-changes:
+    runs-on: ubuntu-latest
+    needs:
+    - terraform-layer-config
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create/Update Issue
+      id: create-issue
+      if: needs.terraform-layer-config.outputs.plan-has-changes == 'true'
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        TF_LAYER: config
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PLAN_OUTPUT: ${{ needs.terraform-layer-config.outputs.plan-output }}
       with:
         filename: .github/config-drift-issue.md
         update_existing: true

@@ -2,6 +2,13 @@ name: Terraform Manual
 on:
   workflow_dispatch:
     inputs:
+      layer:
+        description: 'Which layer to run against'
+        required: true
+        type: choice
+        options:
+          - "deploy"
+          - "config"
       action:
         description: 'Terraform Action to Run'
         required: true
@@ -18,6 +25,7 @@ jobs:
   terraform:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
+      path: /layers/${{ inputs.layer }}/
       tailscale: false
       action: ${{ github.event.inputs.action }}
       debug: ${{ github.event.inputs.debug }}
