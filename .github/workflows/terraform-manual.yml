@@ -13,6 +13,11 @@ on:
         description: 'Terraform Action to Run'
         required: true
         type: string
+      arguments:
+        description: 'Extra arguments for terraform action step'
+        type: string
+        default: ''
+        required: false
       debug:
         type: boolean
         default: false
@@ -25,8 +30,9 @@ jobs:
   terraform:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
-      path: /layers/${{ inputs.layer }}/
+      path: /layers/${{ github.event.inputs.layer }}/
       tailscale: false
       action: ${{ github.event.inputs.action }}
-      debug: ${{ github.event.inputs.debug }}
+      arguments: ${{ github.event.inputs.arguments }}
+      debug: ${{ (github.event.inputs.debug == 'true' && true) || false }}
     secrets: inherit
