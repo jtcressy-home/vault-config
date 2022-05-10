@@ -19,4 +19,7 @@ resource "vault_approle_auth_backend_role_secret_id" "id" {
   backend   = vault_auth_backend.approle.path
   secret_id = data.onepassword_item.vault-self-approle.password
   role_name = vault_approle_auth_backend_role.self.role_name
+  lifecycle {
+    create_before_destroy = true
+  }
 }
