@@ -1,40 +1,40 @@
-resource "google_secret_manager_secret" "vault-tls-cert" {
-  secret_id = "vault-tls-cert"
-  replication {
-    automatic = true
-  }
-}
+# resource "google_secret_manager_secret" "vault-tls-cert" {
+#   secret_id = "vault-tls-cert"
+#   replication {
+#     automatic = true
+#   }
+# }
 
-resource "google_secret_manager_secret" "vault-tls-key" {
-  secret_id = "vault-tls-key"
-  replication {
-    automatic = true
-  }
-}
+# resource "google_secret_manager_secret" "vault-tls-key" {
+#   secret_id = "vault-tls-key"
+#   replication {
+#     automatic = true
+#   }
+# }
 
-resource "google_secret_manager_secret_version" "vault-tls-cert" {
-  secret      = google_secret_manager_secret.vault-tls-cert.name
-  secret_data = cloudflare_origin_ca_certificate.vault-cforigin-tls.certificate
-}
+# resource "google_secret_manager_secret_version" "vault-tls-cert" {
+#   secret      = google_secret_manager_secret.vault-tls-cert.name
+#   secret_data = cloudflare_origin_ca_certificate.vault-cforigin-tls.certificate
+# }
 
-resource "google_secret_manager_secret_version" "vault-tls-key" {
-  secret      = google_secret_manager_secret.vault-tls-key.name
-  secret_data = tls_private_key.vault-cforigin-tls.private_key_pem
-}
+# resource "google_secret_manager_secret_version" "vault-tls-key" {
+#   secret      = google_secret_manager_secret.vault-tls-key.name
+#   secret_data = tls_private_key.vault-cforigin-tls.private_key_pem
+# }
 
-resource "google_secret_manager_secret_iam_member" "vault-tls-cert" {
-  secret_id  = google_secret_manager_secret.vault-tls-cert.id
-  role       = "roles/secretmanager.secretAccessor"
-  member     = "serviceAccount:${google_service_account.vault.email}"
-  depends_on = [google_secret_manager_secret.vault-tls-cert]
-}
+# resource "google_secret_manager_secret_iam_member" "vault-tls-cert" {
+#   secret_id  = google_secret_manager_secret.vault-tls-cert.id
+#   role       = "roles/secretmanager.secretAccessor"
+#   member     = "serviceAccount:${google_service_account.vault.email}"
+#   depends_on = [google_secret_manager_secret.vault-tls-cert]
+# }
 
-resource "google_secret_manager_secret_iam_member" "vault-tls-key" {
-  secret_id  = google_secret_manager_secret.vault-tls-key.id
-  role       = "roles/secretmanager.secretAccessor"
-  member     = "serviceAccount:${google_service_account.vault.email}"
-  depends_on = [google_secret_manager_secret.vault-tls-key]
-}
+# resource "google_secret_manager_secret_iam_member" "vault-tls-key" {
+#   secret_id  = google_secret_manager_secret.vault-tls-key.id
+#   role       = "roles/secretmanager.secretAccessor"
+#   member     = "serviceAccount:${google_service_account.vault.email}"
+#   depends_on = [google_secret_manager_secret.vault-tls-key]
+# }
 
 resource "google_cloud_run_service" "vault" {
   name                       = "vault"
@@ -83,39 +83,39 @@ resource "google_cloud_run_service" "vault" {
           requests = {}
         }
 
-        volume_mounts {
-          name       = "tls-cert"
-          mount_path = "/tls-cert"
-        }
-        volume_mounts {
-          name       = "tls-key"
-          mount_path = "/tls-key"
-        }
+        # volume_mounts {
+        #   name       = "tls-cert"
+        #   mount_path = "/tls-cert"
+        # }
+        # volume_mounts {
+        #   name       = "tls-key"
+        #   mount_path = "/tls-key"
+        # }
       }
-      volumes {
-        name = "tls-cert"
-        secret {
-          secret_name  = google_secret_manager_secret.vault-tls-cert.secret_id
-          default_mode = 292
-          items {
-            key  = "latest"
-            path = "tls.crt"
-            mode = 256
-          }
-        }
-      }
-      volumes {
-        name = "tls-key"
-        secret {
-          secret_name  = google_secret_manager_secret.vault-tls-key.secret_id
-          default_mode = 292
-          items {
-            key  = "latest"
-            path = "tls.key"
-            mode = 256
-          }
-        }
-      }
+      # volumes {
+      #   name = "tls-cert"
+      #   secret {
+      #     secret_name  = google_secret_manager_secret.vault-tls-cert.secret_id
+      #     default_mode = 292
+      #     items {
+      #       key  = "latest"
+      #       path = "tls.crt"
+      #       mode = 256
+      #     }
+      #   }
+      # }
+      # volumes {
+      #   name = "tls-key"
+      #   secret {
+      #     secret_name  = google_secret_manager_secret.vault-tls-key.secret_id
+      #     default_mode = 292
+      #     items {
+      #       key  = "latest"
+      #       path = "tls.key"
+      #       mode = 256
+      #     }
+      #   }
+      # }
     }
   }
 }
