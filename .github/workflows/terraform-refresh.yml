@@ -2,7 +2,7 @@ name: Terraform Auto-Refresh
 on:
   workflow_dispatch:
   schedule:
-    - cron: "* 6,18 * * *"
+    - cron: "0 6,18 * * *"
 
 permissions: write-all
 
