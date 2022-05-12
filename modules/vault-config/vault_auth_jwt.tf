@@ -17,13 +17,15 @@ resource "vault_jwt_auth_backend_role" "github-action" {
   backend         = vault_jwt_auth_backend.jwt.path
   role_type       = "jwt"
   role_name       = "github-action"
-  user_claim      = "actor"
-  groups_claim    = "sub"
+  user_claim      = "sub"
+  groups_claim    = "environment"
   bound_audiences = ["https://github.com/jtcressy", "https://github.com/jtcressy-home"]
   claim_mappings = {
+    "actor"            = "actor"
     "job_workflow_ref" = "job_workflow_ref"
     "run_id"           = "run_id"
     "run_attempt"      = "run_attempt"
+    "run_number"       = "run_number"
     "sub"              = "sub"
   }
   token_policies = ["default"]

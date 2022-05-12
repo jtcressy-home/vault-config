@@ -20,8 +20,8 @@ locals {
     disable_mlock     = true
     listener = {
       tcp = {
-        address         = "0.0.0.0:8080"
-        tls_disable     = 1
+        address     = "0.0.0.0:8080"
+        tls_disable = 1
         # tls_cert_file   = "/tls-cert/tls.crt"
         # tls_key_file    = "/tls-key/tls.key"
         # tls_min_version = "tls13"
