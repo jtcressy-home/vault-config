@@ -5,7 +5,7 @@ resource "vault_identity_entity" "ghactions_tailnet-config_rw" {
 
 resource "vault_identity_entity" "ghactions_tailnet-config_ro" {
   name     = "ghactions_tailnet-config_ro"
-  policies = ["default", vault_policy.terraform-token.name]
+  policies = ["default", vault_policy.terraform-token.name, vault_policy.tailscale_ro.name]
 }
 
 resource "vault_identity_entity_alias" "ghactions_tailnet-config_main" {

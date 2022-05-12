@@ -1,3 +1,11 @@
+locals {
+  tailscale_secret_paths = [
+    {path = "+/tailscale"},
+    {path = "+/+/tailscale"},
+    {path = "tailscale/*"},
+  ]
+}
+
 resource "vault_policy" "admin-all" {
   name   = "admin-all"
   policy = data.vault_policy_document.admin-all.hcl
@@ -30,9 +38,35 @@ resource "vault_policy" "tailscale_rw" {
 }
 
 data "vault_policy_document" "tailscale_rw" {
-  rule {
-    path         = "*tailscale*"
-    capabilities = ["create", "read", "update", "delete", "list"]
+  dynamic rule {
+    for_each = local.tailscale_secret_paths
+    content {
+      path = "generic/data/${rule.value.path}"
+      capabilities = ["create", "read", "update", "list", "delete"]
+    }
+  }
+  dynamic rule {
+    for_each = local.tailscale_secret_paths
+    content {
+      path = "generic/delete/${rule.value.path}"
+      capabilities = ["update"]
+    }
+  }
+}
+
+
+resource "vault_policy" "tailscale_ro" {
+  name   = "tailscale_ro"
+  policy = data.vault_policy_document.tailscale_ro.hcl
+}
+
+data "vault_policy_document" "tailscale_ro" {
+  dynamic rule {
+    for_each = local.tailscale_secret_paths
+    content {
+      path = "generic/data/${rule.value.path}"
+      capabilities = ["read", "list"]
+    }
   }
 }
 
@@ -44,7 +78,7 @@ resource "vault_policy" "home-udm_rw" {
 
 data "vault_policy_document" "home-udm_rw" {
   rule {
-    path         = "generic/home-udm/*"
+    path         = "generic/data/home-udm/*"
     capabilities = ["create", "read", "update", "delete", "list"]
   }
 }
@@ -57,7 +91,7 @@ resource "vault_policy" "home-udm_ro" {
 
 data "vault_policy_document" "home-udm_ro" {
   rule {
-    path         = "generic/home-udm/*"
+    path         = "generic/data/home-udm/*"
     capabilities = ["read", "list"]
   }
 }
