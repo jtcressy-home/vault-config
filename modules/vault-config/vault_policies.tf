@@ -11,6 +11,19 @@ data "vault_policy_document" "admin-all" {
 }
 
 
+resource "vault_policy" "terraform-token" {
+  name   = "terraform-token"
+  policy = data.vault_policy_document.terraform-token.hcl
+}
+
+data "vault_policy_document" "terraform-token" {
+  rule {
+    path         = "auth/token/create"
+    capabilities = ["create", "update"]
+  }
+}
+
+
 resource "vault_policy" "tailscale_rw" {
   name   = "tailscale_rw"
   policy = data.vault_policy_document.tailscale_rw.hcl
