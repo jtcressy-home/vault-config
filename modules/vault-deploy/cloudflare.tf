@@ -2,7 +2,7 @@ resource "cloudflare_record" "jtcressy-net" {
   zone_id = data.cloudflare_zone.jtcressy-net.id
   name    = google_cloud_run_domain_mapping.vault.status.0.resource_records.0.name
   type    = google_cloud_run_domain_mapping.vault.status.0.resource_records.0.type
-  value   = google_cloud_run_domain_mapping.vault.status.0.resource_records.0.rrdata
+  value   = trimsuffix(google_cloud_run_domain_mapping.vault.status.0.resource_records.0.rrdata, ".")
   proxied = false
   ttl     = 60
 }
