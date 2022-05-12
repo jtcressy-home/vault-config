@@ -19,7 +19,7 @@ resource "vault_jwt_auth_backend_role" "github-action" {
   role_name       = "github-action"
   user_claim      = "actor"
   groups_claim    = "sub"
-  bound_audiences = ["https://github.com/jtcressy"]
+  bound_audiences = ["https://github.com/jtcressy", "https://github.com/jtcressy-home"]
   claim_mappings = {
     "job_workflow_ref" = "job_workflow_ref"
     "run_id"           = "run_id"
