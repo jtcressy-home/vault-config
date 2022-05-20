@@ -1,8 +1,8 @@
 locals {
   tailscale_secret_paths = [
-    {path = "+/tailscale"},
-    {path = "+/+/tailscale"},
-    {path = "tailscale/*"},
+    { path = "+/tailscale" },
+    { path = "+/+/tailscale" },
+    { path = "tailscale/*" },
   ]
 }
 
@@ -38,17 +38,17 @@ resource "vault_policy" "tailscale_rw" {
 }
 
 data "vault_policy_document" "tailscale_rw" {
-  dynamic rule {
+  dynamic "rule" {
     for_each = local.tailscale_secret_paths
     content {
-      path = "generic/data/${rule.value.path}"
+      path         = "generic/data/${rule.value.path}"
       capabilities = ["create", "read", "update", "list", "delete"]
     }
   }
-  dynamic rule {
+  dynamic "rule" {
     for_each = local.tailscale_secret_paths
     content {
-      path = "generic/delete/${rule.value.path}"
+      path         = "generic/delete/${rule.value.path}"
       capabilities = ["update"]
     }
   }
@@ -61,10 +61,10 @@ resource "vault_policy" "tailscale_ro" {
 }
 
 data "vault_policy_document" "tailscale_ro" {
-  dynamic rule {
+  dynamic "rule" {
     for_each = local.tailscale_secret_paths
     content {
-      path = "generic/data/${rule.value.path}"
+      path         = "generic/data/${rule.value.path}"
       capabilities = ["read", "list"]
     }
   }
