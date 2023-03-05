@@ -31,9 +31,3 @@ data "onepassword_item" "cloudflare-origin" {
   title = "cloudflare-origin-api-key"
 }
 
-provider "cloudflare" {
-  email                = data.onepassword_item.cloudflare-account.username
-  account_id           = data.onepassword_item.cloudflare-account.password
-  api_key              = data.onepassword_item.cloudflare-global.password
-  api_user_service_key = data.onepassword_item.cloudflare-origin.password
-}
