@@ -3,21 +3,27 @@
   "extends": [
     "config:base"
   ],
-  "text": {
-    "matchStrings": ["VERSION_STRING"],
-    "fileMatch": ["path/to/your/textfile.txt"],
-    "versioning": "github-releases",
-    "branchPrefix": "renovate/",
-    "branchName": "renovate/VERSION_STRING",
-    "githubRelease": {
-      "repo": "my-github-username/my-github-repo"
-    },
+  "matchFiles": [
+    "path/to/your/textfile.txt"
+  ],
+  "matchStrings": [
+    "VERSION_STRING"
+  ],
+  "versioning": {
     "major": "x",
     "minor": "y",
     "patch": "z",
-    "schedule": {
+    "source": "github-releases",
+    "githubRelease": {
+      "repo": "my-github-username/my-github-repo"
+    }
+  },
+  "schedule": [
+    {
       "interval": "daily",
       "timezone": "UTC"
     }
-  }
+  ],
+  "branchPrefix": "renovate/",
+  "branchName": "renovate/VERSION_STRING"
 }
