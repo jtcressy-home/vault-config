@@ -1,27 +1,20 @@
 {
-  "files": [
+  "extends": [
+    "config:base"
+  ],
+  "platform": "github",
+  "repositories": [
+    "hashicorp/vault"
+  ],
+  "packageRules": [
     {
-      "matchFiles": [
-        "path/to/your/textfile.txt"
-      ],
-      "matchStrings": [
-        "VERSION_STRING"
+      "matchPaths": [
+        ".vault-version"
       ],
       "versioning": {
-        "major": "x",
-        "minor": "y",
-        "patch": "z",
-        "source": "github-releases",
-        "githubRelease": {
-          "repo": "my-github-username/my-github-repo"
-        }
-      },
-      "branchPrefix": "renovate/",
-      "branchName": "renovate/VERSION_STRING"
+        "source": "github",
+        "major": true
+      }
     }
-  ],
-  "schedule": {
-    "interval": "daily",
-    "timezone": "UTC"
-  }
+  ]
 }
