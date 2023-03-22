@@ -1,7 +1,4 @@
 {
-  "extends": [
-    "config:base"
-  ],
   "matchFiles": [
     "path/to/your/textfile.txt"
   ],
@@ -17,12 +14,8 @@
       "repo": "my-github-username/my-github-repo"
     }
   },
-  "schedule": [
-    {
-      "interval": "daily",
-      "timezone": "UTC"
-    }
-  ],
+  "scheduleInterval": "daily",
+  "timezone": "UTC",
   "branchPrefix": "renovate/",
   "branchName": "renovate/VERSION_STRING"
 }
