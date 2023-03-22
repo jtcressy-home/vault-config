@@ -11,10 +11,7 @@
       "matchPaths": [
         ".vault-version"
       ],
-      "versioning": {
-        "source": "github",
-        "major": true
-      }
+      "versioning": "semver"
     }
   ]
 }
