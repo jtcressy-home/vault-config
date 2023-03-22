@@ -1,0 +1,23 @@
+{
+  "dependency": {
+    "type": "text",
+    "name": "VERSION_STRING",
+    "fileMatch": [".vault-version"]
+  },
+  "schedule": {
+    "interval": "daily",
+    "time": "12:00"
+  },
+  "github": {
+    "release": true,
+    "releases": {
+      "includeReleasesFrom": "hashicorp/vault"
+    }
+  },
+  "versioning": {
+    "major": "major",
+    "minor": "minor",
+    "patch": "patch"
+  }
+}
+
