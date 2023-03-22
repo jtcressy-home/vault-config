@@ -3,23 +3,30 @@
   "extends": [
     "config:base"
   ],
-  "packageRules": [
+  "depTypes": [
+    "text"
+  ],
+  "schedule": [
     {
-      "packageNames": ["vault"],
-      "depTypeList": ["text"],
-      "updateTypes": ["versioning"],
-      "matchStrings": ["VERSION_STRING"],
-      "fileMatch": [".vault-version"],
-      "versioning": {
-        "major": "x",
-        "minor": "y",
-        "patch": "z"
-      },
-      "schedule": {
-        "interval": "daily"
-      },
-      "repository": "hashicorp/vault",
-      "branchName": "renovate/VERSION_STRING"
+      "interval": "daily",
+      "timezone": "UTC"
     }
-  ]
+  ],
+  "text": {
+    "matchStrings": [
+      "VERSION_STRING"
+    ],
+    "fileMatch": [
+      "path/to/your/textfile.txt"
+    ],
+    "versioning": "github-releases",
+    "branchPrefix": "renovate/",
+    "branchName": "renovate/VERSION_STRING",
+    "githubRelease": {
+      "repo": "my-github-username/my-github-repo"
+    },
+    "major": "x",
+    "minor": "y",
+    "patch": "z"
+  }
 }
