@@ -3,22 +3,9 @@
   "extends": [
     "config:base"
   ],
-  "depTypes": [
-    "text"
-  ],
-  "schedule": [
-    {
-      "interval": "daily",
-      "timezone": "UTC"
-    }
-  ],
   "text": {
-    "matchStrings": [
-      "VERSION_STRING"
-    ],
-    "fileMatch": [
-      "path/to/your/textfile.txt"
-    ],
+    "matchStrings": ["VERSION_STRING"],
+    "fileMatch": ["path/to/your/textfile.txt"],
     "versioning": "github-releases",
     "branchPrefix": "renovate/",
     "branchName": "renovate/VERSION_STRING",
@@ -27,6 +14,10 @@
     },
     "major": "x",
     "minor": "y",
-    "patch": "z"
+    "patch": "z",
+    "schedule": {
+      "interval": "daily",
+      "timezone": "UTC"
+    }
   }
 }
