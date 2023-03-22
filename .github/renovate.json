@@ -1,23 +1,23 @@
 {
-  "packageRules": [
-    {
-      "matchPaths": [
-        "path/to/your/textfile.txt"
-      ],
-      "matchStrings": [
-        "VERSION_STRING"
-      ],
-      "versioning": "github-releases",
-      "branchPrefix": "renovate/",
-      "branchName": "renovate/VERSION_STRING",
-      "githubRelease": {
-        "repo": "my-github-username/my-github-repo"
-      },
+  "text": {
+    "matchFiles": [
+      "path/to/your/textfile.txt"
+    ],
+    "matchStrings": [
+      "VERSION_STRING"
+    ],
+    "versioning": {
       "major": "x",
       "minor": "y",
-      "patch": "z"
-    }
-  ],
+      "patch": "z",
+      "source": "github-releases",
+      "githubRelease": {
+        "repo": "my-github-username/my-github-repo"
+      }
+    },
+    "branchPrefix": "renovate/",
+    "branchName": "renovate/VERSION_STRING"
+  },
   "schedule": {
     "interval": "daily",
     "timezone": "UTC"
