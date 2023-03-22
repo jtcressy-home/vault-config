@@ -1,5 +1,4 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
   ],
@@ -27,4 +26,3 @@
   "branchPrefix": "renovate/",
   "branchName": "renovate/VERSION_STRING"
 }
-
