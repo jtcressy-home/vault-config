@@ -3,15 +3,6 @@
   "extends": [
     "config:base"
   ],
-  "depTypes": [
-    "text"
-  ],
-  "schedule": [
-    {
-      "interval": "daily",
-      "timezone": "UTC"
-    }
-  ],
   "text": {
     "matchStrings": ["VERSION_STRING"],
     "fileMatch": ["path/to/your/textfile.txt"],
