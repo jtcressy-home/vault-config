@@ -14,12 +14,19 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: .vault-version
-    - name: Set up gcloud Cloud SDK environment
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+        credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+        project_id: ${{ vars.GCP_PROJECT_ID }}
+        create_credentials_file: true
+        export_environment_variables: true
+    - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1.1.0
       with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
+        version: '>= 363.0.0'
     - name: Sync From Docker Hub to gcr.io
       run: |
         gcloud auth configure-docker -q

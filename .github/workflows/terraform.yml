@@ -3,11 +3,9 @@ on:
   push:
     branches: [ main ]
     paths:
-    - '**'
-    - '.github/workflows/terraform.yml'
-  pull_request:
-    paths:
-    - '**'
+    - 'layers/**'
+    - 'modules/**'
+    - '.vault-version'
     - '.github/workflows/terraform.yml'
 
 permissions: write-all
@@ -17,8 +15,9 @@ jobs:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
       path: /layers/deploy/
+      environment: vault-deploy
       tailscale: false
-      action: ${{ (github.event.ref == 'refs/heads/main' && 'apply -auto-approve') || 'plan' }}
+      action: apply
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit
   vault-deploy-check:
@@ -45,7 +44,8 @@ jobs:
     - vault-deploy-check
     with:
       path: /layers/config/
+      environment: vault-config
       tailscale: false
-      action: ${{ (github.event.ref == 'refs/heads/main' && 'apply -auto-approve') || 'plan' }}
+      action: apply
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit

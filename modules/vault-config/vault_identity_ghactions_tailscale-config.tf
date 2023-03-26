@@ -9,7 +9,7 @@ resource "vault_identity_entity" "ghactions_tailnet-config_ro" {
 }
 
 resource "vault_identity_entity_alias" "ghactions_tailnet-config_main" {
-  name           = "repo:jtcressy-home/tailnet-config:ref:refs/heads/main"
+  name           = "repo:jtcressy-home/tailnet-config:ref:environment:terraform"
   mount_accessor = vault_jwt_auth_backend.jwt.accessor
   canonical_id   = vault_identity_entity.ghactions_tailnet-config_rw.id
 }

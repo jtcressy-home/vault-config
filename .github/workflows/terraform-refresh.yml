@@ -11,16 +11,20 @@ jobs:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
       path: /layers/deploy
+      environment: vault-deploy
       tailscale: false
-      action: plan -refresh-only
+      action: plan
+      arguments: -refresh-only
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit
   terraform-layer-config:
     uses: jtcressy-home/actions-workflows/.github/workflows/terraform.yml@main
     with:
       path: /layers/config
+      environment: vault-config
       tailscale: false
-      action: plan -refresh-only
+      action: plan
+      arguments: -refresh-only
       debug: ${{ github.event.inputs.debug || false }}
     secrets: inherit
   terraform-layer-deploy-has-changes:
