@@ -49,6 +49,13 @@ data "vault_policy_document" "tailscale_rw" {
   dynamic "rule" {
     for_each = local.tailscale_secret_paths
     content {
+      path         = "generic/metadata/${rule.value.path}"
+      capabilities = ["create", "read", "update", "list", "delete"]
+    }
+  }
+  dynamic "rule" {
+    for_each = local.tailscale_secret_paths
+    content {
       path         = "generic/delete/${rule.value.path}"
       capabilities = ["update"]
     }
