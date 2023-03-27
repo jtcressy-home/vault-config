@@ -1,5 +1,6 @@
 locals {
   tailscale_secret_paths = [
+    { path = "tailscale" },
     { path = "+/tailscale" },
     { path = "+/+/tailscale" },
     { path = "tailscale/*" },
