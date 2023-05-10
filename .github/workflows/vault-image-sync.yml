@@ -24,7 +24,7 @@ jobs:
         create_credentials_file: true
         export_environment_variables: true
     - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1.1.0
+      uses: google-github-actions/setup-gcloud@v1.1.1
       with:
         version: '>= 363.0.0'
     - name: Sync From Docker Hub to gcr.io
