@@ -45,6 +45,7 @@ jobs:
     with:
       path: /layers/config/
       environment: vault-config
+      vault: https://vault.jtcressy.net
       tailscale: false
       action: apply
       debug: ${{ github.event.inputs.debug || false }}

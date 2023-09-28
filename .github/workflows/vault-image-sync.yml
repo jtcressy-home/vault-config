@@ -4,6 +4,10 @@ on:
     paths:
     - '.vault-version'
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -18,9 +22,9 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-        service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+        service_account: ${{ vars.GCP_BUILDS_SERVICE_ACCOUNT }}
         credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
-        project_id: ${{ vars.GCP_PROJECT_ID }}
+        project_id: ${{ vars.GCP_BUILDS_PROJECT_ID }}
         create_credentials_file: true
         export_environment_variables: true
     - name: Set up Cloud SDK
@@ -31,6 +35,6 @@ jobs:
       run: |
         gcloud auth configure-docker -q
         export VAULT_VERSION=$(echo "${{ steps.vault-version.outputs.content }}" | tr -d '\n')
-        docker pull docker.io/library/vault:$VAULT_VERSION
-        docker tag docker.io/library/vault:$VAULT_VERSION us.gcr.io/${{ secrets.GCP_PROJECT_ID }}/vault:$VAULT_VERSION
-        docker push us.gcr.io/${{ secrets.GCP_PROJECT_ID }}/vault:${{ steps.vault-version.outputs.content }}
+        docker pull docker.io/hashicorp/vault:$VAULT_VERSION
+        docker tag docker.io/hashicorp/vault:$VAULT_VERSION us.gcr.io/${{ vars.GCP_PROJECT_ID }}/vault:$VAULT_VERSION
+        docker push us.gcr.io/${{ vars.GCP_PROJECT_ID }}/vault:${{ steps.vault-version.outputs.content }}
