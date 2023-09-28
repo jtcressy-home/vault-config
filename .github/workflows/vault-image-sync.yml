@@ -8,7 +8,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Query .vault-version
       id: vault-version
       uses: juliangruber/read-file-action@v1
