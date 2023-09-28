@@ -3,9 +3,14 @@ variable "vault_bootstrap_token" {
   sensitive = true
 }
 
+provider vault {}
+
 module "vault-config" {
   source                = "../../modules/vault-config"
   vault_bootstrap_token = var.vault_bootstrap_token
+  providers = {
+    vault = vault
+  }
 }
 
 import {
