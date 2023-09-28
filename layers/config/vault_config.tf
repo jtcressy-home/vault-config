@@ -6,10 +6,6 @@ variable "vault_bootstrap_token" {
 module "vault-config" {
   source                = "../../modules/vault-config"
   vault_bootstrap_token = var.vault_bootstrap_token
-
-  vault = {
-    source = "hashicorp/vault"
-  }
 }
 
 import {
