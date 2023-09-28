@@ -41,6 +41,7 @@ jobs:
     with:
       environment: vault-${{ github.event.inputs.layer }}
       path: /layers/${{ github.event.inputs.layer }}/
+      vault: ${{ github.event.inputs.layer == 'config' && 'https://vault.jtcressy.net' || '' }}
       action: ${{ github.event.inputs.action }}
       arguments: ${{ github.event.inputs.arguments }}
       init-arguments: ${{ github.event.inputs.arguments }}
