@@ -33,7 +33,7 @@ jobs:
     needs:
     - terraform-layer-deploy
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Create/Update Issue
       id: create-issue
       if: needs.terraform-layer-deploy.outputs.plan-has-changes == 'true'
@@ -50,7 +50,7 @@ jobs:
     needs:
     - terraform-layer-config
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Create/Update Issue
       id: create-issue
       if: needs.terraform-layer-config.outputs.plan-has-changes == 'true'
